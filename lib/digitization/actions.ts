@@ -319,6 +319,7 @@ export async function confirmJob(
   await supabase.from('digitization_jobs').update({ model_id: model.id }).eq('id', jobId)
   revalidatePath('/admin/digitalizacion')
   revalidatePath('/admin/productos')
+  revalidatePath('/')
   revalidatePath('/catalogo')
   revalidatePath('/producto/[slug]', 'page')
   return { ok: true, data: { modelUrl } }
