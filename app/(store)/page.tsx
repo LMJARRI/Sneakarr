@@ -1,4 +1,5 @@
 import Link from 'next/link'
+import { connection } from 'next/server'
 import { ArrowRight } from 'lucide-react'
 import { BrandLinks } from '@/components/home/brand-links'
 import { Hero } from '@/components/home/hero'
@@ -7,6 +8,8 @@ import { ProductGrid } from '@/components/products/product-grid'
 import { getFeaturedProducts, getPublishedProducts } from '@/lib/products'
 
 export default async function HomePage() {
+  // Se renderiza por request: el build no depende de la base y los modelos 3D nuevos aparecen al instante.
+  await connection()
   const [featured, published] = await Promise.all([getFeaturedProducts(4), getPublishedProducts()])
 
   const brandCounts = new Map<string, number>()

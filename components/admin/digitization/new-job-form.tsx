@@ -62,11 +62,10 @@ export function NewJobForm({
 
   const closeCamera = useCallback(() => setCameraOpen(false), [])
 
-  // Si el navegador no da acceso a la cámara en vivo, se usa la cámara nativa del sistema.
-  const cameraUnavailable = useCallback(() => {
+  // Se invoca desde un clic: los navegadores móviles solo abren el input de cámara con un gesto del usuario.
+  const openNativeCamera = useCallback(() => {
+    cameraRef.current?.click()
     setCameraOpen(false)
-    toast.info('No se pudo abrir la cámara integrada. Se usará la cámara del dispositivo.')
-    window.setTimeout(() => cameraRef.current?.click(), 0)
   }, [])
 
   function addFiles(files: FileList | File[] | null) {
@@ -176,7 +175,7 @@ export function NewJobForm({
         remaining={MAX_PHOTOS - photos.length}
         onCapture={(file) => addFiles([file])}
         onClose={closeCamera}
-        onUnavailable={cameraUnavailable}
+        onOpenNativeCamera={openNativeCamera}
       />
       <Panel className="flex flex-col gap-3">
         <div className="flex flex-col gap-1">
